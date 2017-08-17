@@ -7,9 +7,9 @@
 
 // connect db 
 static 	$DB_HOST="localhost";
-static 	$DB_NAME="jol";
-static 	$DB_USER="root";
-static 	$DB_PASS="root";
+static 	$DB_NAME="oj";
+static 	$DB_USER="main_user";
+static 	$DB_PASS="main_2017";
 
 static 	$OJ_NAME="HUSTOJ";
 static 	$OJ_HOME="./";
@@ -112,7 +112,7 @@ function pdo_query($sql){
 
 	//sychronize php and mysql server with timezone settings, dafault setting for China
 	//if you are not from China, comment out these two lines or modify them.
-	//date_default_timezone_set("PRC");
-	//pdo_query("SET time_zone ='+8:00'");
+	date_default_timezone_set("PRC");
+	pdo_query("SET time_zone ='+8:00'");
 
 ?>
