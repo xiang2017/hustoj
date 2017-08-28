@@ -123,25 +123,24 @@ static int use_ptrace = 1;
 MYSQL *conn;
 #endif
 
-#define LANGUAGE_C = 0;
-#define LANGUAGE_CC = 1;
-#define LANGUAGE_PAS = 2;
-#define LANGUAGE_JAVA = 3;
-#define LANGUAGE_RUBY = 4;
-#define LANGUAGE_SHELL = 5;
-#define LANGUAGE_PYTHON = 6;
-#define LANGUAGE_PHP = 7;
-#define LANGUAGE_PURL = 8;
-#define LANGUAGE_CS = 9;
-#define LANGUAGE_M = 10;
-#define LANGUAGE_BASIC = 11;
-#define LANGUAGE_SCM = 12;
-#define LANGUAGE_C_A = 13;
-#define LANGUAGE_CC_A = 14;
-#define LANGUAGE_LUA = 15;
-#define LANGUAGE_JS = 16;
-#define LANGUAGE_GO = 17;
-
+#define LANGUAGE_C = 0
+#define LANGUAGE_CC = 1
+#define LANGUAGE_PAS = 2
+#define LANGUAGE_JAVA = 3
+#define LANGUAGE_RUBY = 4
+#define LANGUAGE_SHELL = 5
+#define LANGUAGE_PYTHON = 6
+#define LANGUAGE_PHP = 7
+#define LANGUAGE_PURL = 8
+#define LANGUAGE_CS = 9
+#define LANGUAGE_M = 10
+#define LANGUAGE_BASIC = 11
+#define LANGUAGE_SCM = 12
+#define LANGUAGE_C_A = 13
+#define LANGUAGE_CC_A = 14
+#define LANGUAGE_LUA = 15
+#define LANGUAGE_JS = 16
+#define LANGUAGE_GO = 17
 
 
 static char lang_ext[18][8] = { "c", "cc", "pas", "java", "rb", "sh", "py",
