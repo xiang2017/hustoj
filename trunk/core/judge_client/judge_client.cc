@@ -123,6 +123,27 @@ static int use_ptrace = 1;
 MYSQL *conn;
 #endif
 
+#define LANGUAGE_C = 0;
+#define LANGUAGE_CC = 1;
+#define LANGUAGE_PAS = 2;
+#define LANGUAGE_JAVA = 3;
+#define LANGUAGE_RUBY = 4;
+#define LANGUAGE_SHELL = 5;
+#define LANGUAGE_PYTHON = 6;
+#define LANGUAGE_PHP = 7;
+#define LANGUAGE_PURL = 8;
+#define LANGUAGE_CS = 9;
+#define LANGUAGE_M = 10;
+#define LANGUAGE_BASIC = 11;
+#define LANGUAGE_SCM = 12;
+#define LANGUAGE_C_A = 13;
+#define LANGUAGE_CC_A = 14;
+#define LANGUAGE_LUA = 15;
+#define LANGUAGE_JS = 16;
+#define LANGUAGE_GO = 17;
+
+
+
 static char lang_ext[18][8] = { "c", "cc", "pas", "java", "rb", "sh", "py",
 		"php", "pl", "cs", "m", "bas", "scm","c","cc","lua","js","go" };
 //static char buf[BUFFER_SIZE];
@@ -889,16 +910,16 @@ void update_problem(int pid) {
 	}
 }
 void umount(char * work_dir){
-        execute_cmd("/bin/umount %s/proc 2>&1 >/dev/null", work_dir);
-        execute_cmd("/bin/umount %s/dev 2>&1 >/dev/null", work_dir);
-        execute_cmd("/bin/umount %s/lib 2>&1 >/dev/null", work_dir);
-        execute_cmd("/bin/umount %s/lib64 2>&1 >/dev/null", work_dir);
-        execute_cmd("/bin/umount %s/etc/alternatives 2>&1 >/dev/null", work_dir);
-        execute_cmd("/bin/umount %s/usr 2>&1 >/dev/null", work_dir);
-        execute_cmd("/bin/umount %s/bin 2>&1 >/dev/null", work_dir);
-        execute_cmd("/bin/umount %s/proc 2>&1 >/dev/null", work_dir);
-        execute_cmd("/bin/umount bin usr lib lib64 etc/alternatives proc dev 2>&1 >/dev/null");
-        execute_cmd("/bin/umount %s/* 2>&1 >/dev/null",work_dir);
+    execute_cmd("/bin/umount %s/proc 2>&1 >/dev/null", work_dir);
+    execute_cmd("/bin/umount %s/dev 2>&1 >/dev/null", work_dir);
+    execute_cmd("/bin/umount %s/lib 2>&1 >/dev/null", work_dir);
+    execute_cmd("/bin/umount %s/lib64 2>&1 >/dev/null", work_dir);
+    execute_cmd("/bin/umount %s/etc/alternatives 2>&1 >/dev/null", work_dir);
+    execute_cmd("/bin/umount %s/usr 2>&1 >/dev/null", work_dir);
+    execute_cmd("/bin/umount %s/bin 2>&1 >/dev/null", work_dir);
+    execute_cmd("/bin/umount %s/proc 2>&1 >/dev/null", work_dir);
+    execute_cmd("/bin/umount bin usr lib lib64 etc/alternatives proc dev 2>&1 >/dev/null");
+    execute_cmd("/bin/umount %s/* 2>&1 >/dev/null",work_dir);
 	execute_cmd("/bin/umount %s/log/* 2>&1 >/dev/null",work_dir);
 	execute_cmd("/bin/umount %s/log/etc/alternatives 2>&1 >/dev/null", work_dir);
 }
@@ -958,90 +979,92 @@ int compile(int lang,char * work_dir) {
 		LIM.rlim_cur = 10 * STD_MB;
 		setrlimit(RLIMIT_FSIZE, &LIM);
 
-		if(lang==3||lang==17){
+		if(lang==LANGUAGE_JAVA||lang==LANGUAGE_GO){
 		   LIM.rlim_max = STD_MB <<11;
 		   LIM.rlim_cur = STD_MB <<11;	
-                }else{
+        }else{
 		   LIM.rlim_max = STD_MB *256 ;
 		   LIM.rlim_cur = STD_MB *256 ;
 		}
 		setrlimit(RLIMIT_AS, &LIM);
-		if (lang != 2 && lang != 11) {
+		if (lang != LANGUAGE_PAS && lang != LANGUAGE_BASIC) {
 			freopen("ce.txt", "w", stderr);
 			//freopen("/dev/null", "w", stdout);
 		} else {
 			freopen("ce.txt", "w", stdout);
 		}
-		if(lang != 3 && lang != 9 && lang != 6 && lang != 11){
+		if(lang != LANGUAGE_JAVA && lang != LANGUAGE_CS && lang != LANGUAGE_PYTHON && lang != LANGUAGE_BASIC){
 			execute_cmd("mkdir -p bin usr lib lib64 etc/alternatives proc tmp dev");
 			execute_cmd("chown judge *");
-                	execute_cmd("mount -o bind /bin bin");
-                	execute_cmd("mount -o bind /usr usr");
-                	execute_cmd("mount -o bind /lib lib");
+        	execute_cmd("mount -o bind /bin bin");
+        	execute_cmd("mount -o bind /usr usr");
+        	execute_cmd("mount -o bind /lib lib");
 #ifndef __i386
-                	execute_cmd("mount -o bind /lib64 lib64");
+        	execute_cmd("mount -o bind /lib64 lib64");
 #endif
-                	execute_cmd("mount -o bind /etc/alternatives etc/alternatives");
-                	execute_cmd("mount -o bind /proc proc");
-                	if(lang>2 && lang!=10 && lang!=13 && lang!=14)
+        	execute_cmd("mount -o bind /etc/alternatives etc/alternatives");
+        	execute_cmd("mount -o bind /proc proc");
+        	if(lang>LANGUAGE_PAS && lang!=LANGUAGE_M && lang!=LANGUAGE_C_A && lang!=LANGUAGE_CC_A)
 				execute_cmd("mount -o bind /dev dev");
-                        chroot(work_dir);
+            chroot(work_dir);
 		}
+
+		// 据说会有安全隐患
 		while(setgid(1536)!=0) sleep(1);
-                while(setuid(1536)!=0) sleep(1);
-                while(setresuid(1536, 1536, 1536)!=0) sleep(1);
+        while(setuid(1536)!=0) sleep(1);
+        while(setresuid(1536, 1536, 1536)!=0) sleep(1);
 
 		switch (lang) {
-		case 0:
+		case LANGUAGE_C:
 			execvp(CP_C[0], (char * const *) CP_C);
 			break;
-		case 1:
+		case LANGUAGE_CC:
 			execvp(CP_X[0], (char * const *) CP_X);
 			break;
-		case 2:
+		case LANGUAGE_PAS:
 			execvp(CP_P[0], (char * const *) CP_P);
 			break;
-		case 3:
+		case LANGUAGE_JAVA:
 			execvp(CP_J[0], (char * const *) CP_J);
 			break;
-		case 4:
+		case LANGUAGE_RUBY:
 			execvp(CP_R[0], (char * const *) CP_R);
 			break;
-		case 5:
+		case LANGUAGE_SHELL:
 			execvp(CP_B[0], (char * const *) CP_B);
 			break;
-		//case 6:
+		//case LANGUAGE_PYTHON:
 		//	execvp(CP_Y[0], (char * const *) CP_Y);
 		//	break;
-		case 7:
+		case LANGUAGE_PHP:
 			execvp(CP_PH[0], (char * const *) CP_PH);
 			break;
-		case 8:
+		case LANGUAGE_PURL:
 			execvp(CP_PL[0], (char * const *) CP_PL);
 			break;
-		case 9:
+		case LANGUAGE_CS:
 			execvp(CP_CS[0], (char * const *) CP_CS);
 			break;
 
-		case 10:
+		case LANGUAGE_M:
 			execvp(CP_OC[0], (char * const *) CP_OC);
 			break;
-		case 11:
+		case LANGUAGE_BASIC:
 			execvp(CP_BS[0], (char * const *) CP_BS);
 			break;
-		case 13:
+		case LANGUAGE_C_A:
 			execvp(CP_CLANG[0], (char * const *) CP_CLANG);
 			break;
-		case 14:
+		case LANGUAGE_CC_A:
 			execvp(CP_CLANG_CPP[0], (char * const *) CP_CLANG_CPP);
 			break;
-		case 15:
+		case LANGUAGE_LUA:
 			execvp(CP_LUA[0], (char * const *) CP_LUA);
 			break;
-		//case 16:
+		//case LANGUAGE_JS:
 		//	execvp(CP_JS[0], (char * const *) CP_JS);
 		//	break;
-		case 17:
+		case LANGUAGE_GO:
 			execvp(CP_GO[0], (char * const *) CP_GO);
 			break;
 		default:
@@ -1055,7 +1078,7 @@ int compile(int lang,char * work_dir) {
 		int status = 0;
 
 		waitpid(pid, &status, 0);
-		if (lang > 3 && lang < 7)
+		if (lang > LANGUAGE_JAVA && lang < LANGUAGE_PHP)
 			status = get_file_size("ce.txt");
 		if (DEBUG)
 			printf("status=%d\n", status);
@@ -1582,34 +1605,34 @@ void copy_js_runtime(char * work_dir) {
 
 //	copy_shell_runtime(work_dir);
 	execute_cmd("/bin/mkdir -p %s/usr/lib /lib/i386-linux-gnu/", work_dir);
-        execute_cmd("/bin/cp /lib/i386-linux-gnu/libz.so.*  %s/lib/i386-linux-gnu/", work_dir);
-        execute_cmd("/bin/cp /usr/lib/i386-linux-gnu/libcares.so.*  %s/lib/i386-linux-gnu/", work_dir);
-        execute_cmd("/bin/cp /usr/lib/libv8.so.*  %s/lib/i386-linux-gnu/", work_dir);
-        execute_cmd("/bin/cp /lib/i386-linux-gnu/libssl.so.*  %s/lib/i386-linux-gnu/", work_dir);
-        execute_cmd("/bin/cp /lib/i386-linux-gnu/libcrypto.so.*  %s/lib/i386-linux-gnu/", work_dir);
-        execute_cmd("/bin/cp /lib/i386-linux-gnu/libdl.so.*  %s/lib/i386-linux-gnu/", work_dir);
-        execute_cmd("/bin/cp /lib/i386-linux-gnu/librt.so.*  %s/lib/i386-linux-gnu/", work_dir);
-        execute_cmd("/bin/cp /usr/lib/i386-linux-gnu/libstdc++.so.*  %s/lib/i386-linux-gnu/", work_dir);
-        execute_cmd("/bin/cp /lib/i386-linux-gnu/libpthread.so.*  %s/lib/i386-linux-gnu/", work_dir);
-        execute_cmd("/bin/cp /lib/i386-linux-gnu/libc.so.6  %s/lib/i386-linux-gnu/", work_dir);
-        execute_cmd("/bin/cp /lib/i386-linux-gnu/libm.so.6  %s/lib/i386-linux-gnu/", work_dir);
-        execute_cmd("/bin/cp /lib/i386-linux-gnu/libgcc_s.so.1  %s/lib/i386-linux-gnu/", work_dir);
-        execute_cmd("/bin/cp /lib/ld-linux.so.*  %s/lib/i386-linux-gnu/", work_dir);
+    execute_cmd("/bin/cp /lib/i386-linux-gnu/libz.so.*  %s/lib/i386-linux-gnu/", work_dir);
+    execute_cmd("/bin/cp /usr/lib/i386-linux-gnu/libcares.so.*  %s/lib/i386-linux-gnu/", work_dir);
+    execute_cmd("/bin/cp /usr/lib/libv8.so.*  %s/lib/i386-linux-gnu/", work_dir);
+    execute_cmd("/bin/cp /lib/i386-linux-gnu/libssl.so.*  %s/lib/i386-linux-gnu/", work_dir);
+    execute_cmd("/bin/cp /lib/i386-linux-gnu/libcrypto.so.*  %s/lib/i386-linux-gnu/", work_dir);
+    execute_cmd("/bin/cp /lib/i386-linux-gnu/libdl.so.*  %s/lib/i386-linux-gnu/", work_dir);
+    execute_cmd("/bin/cp /lib/i386-linux-gnu/librt.so.*  %s/lib/i386-linux-gnu/", work_dir);
+    execute_cmd("/bin/cp /usr/lib/i386-linux-gnu/libstdc++.so.*  %s/lib/i386-linux-gnu/", work_dir);
+    execute_cmd("/bin/cp /lib/i386-linux-gnu/libpthread.so.*  %s/lib/i386-linux-gnu/", work_dir);
+    execute_cmd("/bin/cp /lib/i386-linux-gnu/libc.so.6  %s/lib/i386-linux-gnu/", work_dir);
+    execute_cmd("/bin/cp /lib/i386-linux-gnu/libm.so.6  %s/lib/i386-linux-gnu/", work_dir);
+    execute_cmd("/bin/cp /lib/i386-linux-gnu/libgcc_s.so.1  %s/lib/i386-linux-gnu/", work_dir);
+    execute_cmd("/bin/cp /lib/ld-linux.so.*  %s/lib/i386-linux-gnu/", work_dir);
 
 	execute_cmd("/bin/mkdir -p %s/usr/lib /lib/x86_64-linux-gnu/", work_dir);
-        execute_cmd("/bin/cp /lib/x86_64-linux-gnu/libz.so.*  %s/lib/x86_64-linux-gnu/", work_dir);
-        execute_cmd("/bin/cp /usr/lib/x86_64-linux-gnu/libcares.so.*  %s/lib/x86_64-linux-gnu/", work_dir);
-        execute_cmd("/bin/cp /usr/lib/libv8.so.*  %s/lib/x86_64-linux-gnu/", work_dir);
-        execute_cmd("/bin/cp /lib/x86_64-linux-gnu/libssl.so.*  %s/lib/x86_64-linux-gnu/", work_dir);
-        execute_cmd("/bin/cp /lib/x86_64-linux-gnu/libcrypto.so.*  %s/lib/x86_64-linux-gnu/", work_dir);
-        execute_cmd("/bin/cp /lib/x86_64-linux-gnu/libdl.so.*  %s/lib/x86_64-linux-gnu/", work_dir);
-        execute_cmd("/bin/cp /lib/x86_64-linux-gnu/librt.so.*  %s/lib/x86_64-linux-gnu/", work_dir);
-        execute_cmd("/bin/cp /usr/lib/x86_64-linux-gnu/libstdc++.so.*  %s/lib/x86_64-linux-gnu/", work_dir);
-        execute_cmd("/bin/cp /lib/x86_64-linux-gnu/libpthread.so.*  %s/lib/x86_64-linux-gnu/", work_dir);
-        execute_cmd("/bin/cp /lib/x86_64-linux-gnu/libc.so.6  %s/lib/x86_64-linux-gnu/", work_dir);
-        execute_cmd("/bin/cp /lib/x86_64-linux-gnu/libm.so.6  %s/lib/x86_64-linux-gnu/", work_dir);
-        execute_cmd("/bin/cp /lib/x86_64-linux-gnu/libgcc_s.so.1  %s/lib/x86_64-linux-gnu/", work_dir);
-        execute_cmd("/bin/cp /lib64/ld-linux-x86-64.so.2  %s/lib/x86_64-linux-gnu/", work_dir);
+    execute_cmd("/bin/cp /lib/x86_64-linux-gnu/libz.so.*  %s/lib/x86_64-linux-gnu/", work_dir);
+    execute_cmd("/bin/cp /usr/lib/x86_64-linux-gnu/libcares.so.*  %s/lib/x86_64-linux-gnu/", work_dir);
+    execute_cmd("/bin/cp /usr/lib/libv8.so.*  %s/lib/x86_64-linux-gnu/", work_dir);
+    execute_cmd("/bin/cp /lib/x86_64-linux-gnu/libssl.so.*  %s/lib/x86_64-linux-gnu/", work_dir);
+    execute_cmd("/bin/cp /lib/x86_64-linux-gnu/libcrypto.so.*  %s/lib/x86_64-linux-gnu/", work_dir);
+    execute_cmd("/bin/cp /lib/x86_64-linux-gnu/libdl.so.*  %s/lib/x86_64-linux-gnu/", work_dir);
+    execute_cmd("/bin/cp /lib/x86_64-linux-gnu/librt.so.*  %s/lib/x86_64-linux-gnu/", work_dir);
+    execute_cmd("/bin/cp /usr/lib/x86_64-linux-gnu/libstdc++.so.*  %s/lib/x86_64-linux-gnu/", work_dir);
+    execute_cmd("/bin/cp /lib/x86_64-linux-gnu/libpthread.so.*  %s/lib/x86_64-linux-gnu/", work_dir);
+    execute_cmd("/bin/cp /lib/x86_64-linux-gnu/libc.so.6  %s/lib/x86_64-linux-gnu/", work_dir);
+    execute_cmd("/bin/cp /lib/x86_64-linux-gnu/libm.so.6  %s/lib/x86_64-linux-gnu/", work_dir);
+    execute_cmd("/bin/cp /lib/x86_64-linux-gnu/libgcc_s.so.1  %s/lib/x86_64-linux-gnu/", work_dir);
+    execute_cmd("/bin/cp /lib64/ld-linux-x86-64.so.2  %s/lib/x86_64-linux-gnu/", work_dir);
 
 	execute_cmd("/bin/cp /usr/bin/nodejs %s/", work_dir);
 

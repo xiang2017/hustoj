@@ -185,10 +185,10 @@ void init_mysql_conf() {
 			read_buf(buf, "OJ_LANG_SET", oj_lang_set);
 			
 			read_int(buf, "OJ_REDISENABLE", &oj_redis);
-                        read_buf(buf, "OJ_REDISSERVER", oj_redisserver);
-                        read_int(buf, "OJ_REDISPORT", &oj_redisport);
-                        read_buf(buf, "OJ_REDISAUTH", oj_redisauth);
-                        read_buf(buf, "OJ_REDISQNAME", oj_redisqname);
+            read_buf(buf, "OJ_REDISSERVER", oj_redisserver);
+            read_int(buf, "OJ_REDISPORT", &oj_redisport);
+            read_buf(buf, "OJ_REDISAUTH", oj_redisauth);
+            read_buf(buf, "OJ_REDISQNAME", oj_redisqname);
 
 
 		}
@@ -246,8 +246,9 @@ int executesql(const char * sql) {
 		sleep(20);
 		conn = NULL;
 		return 1;
-	} else
+	} else {
 		return 0;
+	}
 }
 #endif
 
