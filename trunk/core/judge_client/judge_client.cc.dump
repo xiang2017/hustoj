@@ -1008,7 +1008,7 @@ int compile(int lang,char * work_dir) {
             chroot(work_dir);
 		}
 
-		// 据说会有安全隐患
+		// 鎹浼氭湁瀹夊叏闅愭偅
 		while(setgid(1536)!=0) sleep(1);
         while(setuid(1536)!=0) sleep(1);
         while(setresuid(1536, 1536, 1536)!=0) sleep(1);
@@ -1973,7 +1973,7 @@ void watch_solution(pid_t pidApp, char * infile, int & ACflg, int isspj,
 			ptrace(PTRACE_KILL, pidApp, NULL, NULL);
 			break;
 		}
-		//sig = status >> 8;/*status >> 8 脙楼脗路脗庐脙陇脗赂脗聧脙楼脗陇脜隆脙娄脣聹脗炉EXITCODE*/
+		//sig = status >> 8;/*status >> 8 鑴欐ゼ鑴楄矾鑴楀簮鑴欓檱鑴楄祩鑴楄仹鑴欐ゼ鑴楅檱鑴滈殕鑴欏▌鑴ｈ伖鑴楃倝EXITCODE*/
 
 		if (WIFEXITED(status))
 			break;
@@ -2030,7 +2030,7 @@ void watch_solution(pid_t pidApp, char * infile, int & ACflg, int isspj,
 		if (WIFSIGNALED(status)) {
 			/*  WIFSIGNALED: if the process is terminated by signal
 			 *
-			 *  psignal(int sig, char *s)锛宭ike perror(char *s)锛宲rint out s, with error msg from system of sig  
+			 *  psignal(int sig, char *s)閿涘ike perror(char *s)閿涘rint out s, with error msg from system of sig  
 			 * sig = 5 means Trace/breakpoint trap
 			 * sig = 11 means Segmentation fault
 			 * sig = 25 means File size limit exceeded
