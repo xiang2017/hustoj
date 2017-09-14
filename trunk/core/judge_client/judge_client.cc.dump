@@ -133,7 +133,7 @@ MYSQL *conn;
 #define LANGUAGE_PHP 7
 #define LANGUAGE_PURL 8
 #define LANGUAGE_CS 9
-#define LANGUAGE_M 0
+#define LANGUAGE_M 10
 #define LANGUAGE_BASIC 11
 #define LANGUAGE_SCM 12
 #define LANGUAGE_C_A 13
