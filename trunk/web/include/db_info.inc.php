@@ -7,7 +7,7 @@
 
 // connect db 
 static 	$DB_HOST="localhost";
-static 	$DB_NAME="oj";
+static 	$DB_NAME="echoecho";
 static 	$DB_USER="main_user";
 static 	$DB_PASS="main_2017";
 
