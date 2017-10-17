@@ -993,7 +993,7 @@ int compile(int lang,char * work_dir) {
 		} else {
 			freopen("ce.txt", "w", stdout);
 		}
-		if(lang != LANGUAGE_JAVA && lang != LANGUAGE_CS && lang != LANGUAGE_BASIC){
+		if(lang != LANGUAGE_JAVA && lang != LANGUAGE_CS && lang != LANGUAGE_PYTHON && lang != LANGUAGE_BASIC){
 			execute_cmd("mkdir -p bin usr lib lib64 etc/alternatives proc tmp dev");
 			execute_cmd("chown judge *");
         	execute_cmd("mount -o bind /bin bin");
@@ -1736,7 +1736,7 @@ void run_solution(int & lang, char * work_dir, int & time_lmt, int & usedtime,
 	case 6: //Python
 		if(!py2){	
 			execl("/python2", "/python2", "Main.py", (char *) NULL);
-			//printf("Error %d:%s\n",errno, strerror(errno));
+			printf("Error %d:%s\n",errno, strerror(errno));
 		}else{
 			execl("/python3", "/python3", "Main.py", (char *) NULL);
 		}
