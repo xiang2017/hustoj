@@ -1528,14 +1528,13 @@ void copy_python_runtime(char * work_dir) {
     execute_cmd("mkdir %s/usr/lib64", work_dir);
     execute_cmd("cp /usr/bin/python* %s/", work_dir);
     execute_cmd("cp /usr/lib64/libpython* %s/usr/lib64/", work_dir);
-    
-	execute_cmd("/bin/chown judge %s", work_dir);
 
+	execute_cmd("/bin/mkdir -p %s/etc", work_dir);
 	execute_cmd("/bin/grep judge /etc/passwd>%s/etc/passwd", work_dir);
 
     execute_cmd("/bin/mount -o bind /dev %s/dev", work_dir);
 
-
+	execute_cmd("/bin/chown -R judge %s", work_dir);
 }
 void copy_php_runtime(char * work_dir) {
 
@@ -2327,7 +2326,7 @@ int main(int argc, char** argv) {
 
 	//java is lucky
 	if (lang >= 3 && lang != 10 && lang != 13 && lang != 14) {  // Clang Clang++ not VM or Script
-		// the limit for jav
+		// the limit for java
 		time_lmt = time_lmt + java_time_bonus;
 		mem_lmt = mem_lmt + java_memory_bonus;
 		// copy java.policy
