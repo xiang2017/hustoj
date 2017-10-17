@@ -1383,18 +1383,16 @@ void prepare_files(char * filename, int namelen, char * infile, int & p_id,
 
 }
 
-void copy_shell_runtime(char * work_dir) {
-
-	execute_cmd("mkdir %s/lib", work_dir);
+void copy_shell_runtime(char `*` work_dir) {
+    execute_cmd("mkdir %s/lib", work_dir);
     execute_cmd("mkdir %s/lib64", work_dir);
     execute_cmd("mkdir %s/bin", work_dir);
-    execute_cmd("cp /lib/* %s/lib/", work_dir);
-    execute_cmd("cp /lib64/* %s/lib64/", work_dir);
+    execute_cmd("cp /lib/`*` %s/lib/", work_dir);
+    execute_cmd("cp /lib64/`*` %s/lib64/", work_dir);
     execute_cmd("cp -a /lib32 %s/", work_dir);
     execute_cmd("cp /bin/busybox %s/bin/", work_dir);
     execute_cmd("ln -s /bin/busybox %s/bin/sh", work_dir);
     execute_cmd("cp /bin/bash %s/bin/bash", work_dir);
-
 }
 void copy_objc_runtime(char * work_dir) {
 	copy_shell_runtime(work_dir);
@@ -1489,9 +1487,9 @@ void copy_bash_runtime(char * work_dir) {
 	execute_cmd("chmod +rx %s/Main.sh", work_dir);
 
 }
-void copy_ruby_runtime(char * work_dir) {
+void copy_ruby_runtime(char `*` work_dir) {
 
-	copy_shell_runtime(work_dir);
+    copy_shell_runtime(work_dir);
     execute_cmd("mkdir %s/usr", work_dir);
     execute_cmd("mkdir %s/usr/lib64", work_dir);
     execute_cmd("cp /usr/lib64/libruby`*` %s/usr/lib64/", work_dir);
@@ -1521,47 +1519,40 @@ void copy_guile_runtime(char * work_dir) {
 
 }
 
-void copy_python_runtime(char * work_dir) {
+void copy_python_runtime(char `*` work_dir) {
 
-    copy_shell_runtime(work_dir);
-    execute_cmd("mkdir %s/usr", work_dir);
-    execute_cmd("mkdir %s/usr/lib64", work_dir);
-    execute_cmd("cp /usr/bin/python* %s/", work_dir);
-    execute_cmd("cp /usr/lib64/libpython* %s/usr/lib64/", work_dir);
-
-	execute_cmd("/bin/mkdir -p %s/etc", work_dir);
-	execute_cmd("/bin/grep judge /etc/passwd>%s/etc/passwd", work_dir);
-
-    execute_cmd("/bin/mount -o bind /dev %s/dev", work_dir);
-
-	execute_cmd("/bin/chown -R judge %s", work_dir);
-}
-void copy_php_runtime(char * work_dir) {
-
-	copy_shell_runtime(work_dir);
-    execute_cmd("mkdir %s/usr", work_dir);
-    execute_cmd("mkdir %s/usr/lib64", work_dir);
-    execute_cmd("cp /usr/lib64/libedit* %s/usr/lib64/", work_dir);
-    execute_cmd("cp /usr/lib64/libdb* %s/usr/lib64/", work_dir);
-    execute_cmd("cp /usr/lib64/libgssapi_krb5* %s/usr/lib64/", work_dir);
-    execute_cmd("cp /usr/lib64/libkrb5* %s/usr/lib64/", work_dir);
-    execute_cmd("cp /usr/lib64/libk5crypto* %s/usr/lib64/", work_dir);
-    execute_cmd("cp /usr/lib64/libxml2* %s/usr/lib64/", work_dir);
-    execute_cmd("cp /usr/lib64/libncurses* %s/usr/lib64/", work_dir);
-    execute_cmd("cp /usr/lib64/libgmp* %s/usr/lib64/", work_dir);
-    execute_cmd("cp /usr/lib64/libbz2* %s/usr/lib64/", work_dir);
-    execute_cmd("cp /usr/lib64/libz.so* %s/usr/lib64/", work_dir);
-    execute_cmd("cp /usr/bin/php* %s/", work_dir);
-    execute_cmd("chmod +rx %s/Main.php", work_dir);
+        copy_shell_runtime(work_dir);
+        execute_cmd("mkdir %s/usr", work_dir);
+        execute_cmd("mkdir %s/usr/lib64", work_dir);
+        execute_cmd("cp /usr/bin/python`*` %s/", work_dir);
+        execute_cmd("cp /usr/lib64/libpython`*` %s/usr/lib64/", work_dir);
 
 }
-void copy_perl_runtime(char * work_dir) {
+void copy_php_runtime(char `*` work_dir) {
+        copy_shell_runtime(work_dir);
+        execute_cmd("mkdir %s/usr", work_dir);
+        execute_cmd("mkdir %s/usr/lib64", work_dir);
+        execute_cmd("cp /usr/lib64/libedit`*` %s/usr/lib64/", work_dir);
+        execute_cmd("cp /usr/lib64/libdb`*` %s/usr/lib64/", work_dir);
+        execute_cmd("cp /usr/lib64/libgssapi_krb5`*` %s/usr/lib64/", work_dir);
+        execute_cmd("cp /usr/lib64/libkrb5`*` %s/usr/lib64/", work_dir);
+        execute_cmd("cp /usr/lib64/libk5crypto`*` %s/usr/lib64/", work_dir);
+        execute_cmd("cp /usr/lib64/libxml2`*` %s/usr/lib64/", work_dir);
+        execute_cmd("cp /usr/lib64/libncurses`*` %s/usr/lib64/", work_dir);
+        execute_cmd("cp /usr/lib64/libgmp`*` %s/usr/lib64/", work_dir);
+        execute_cmd("cp /usr/lib64/libbz2`*` %s/usr/lib64/", work_dir);
+        execute_cmd("cp /usr/lib64/libz.so`*` %s/usr/lib64/", work_dir);
+        execute_cmd("cp /usr/bin/php`*` %s/", work_dir);
+        execute_cmd("chmod +rx %s/Main.php", work_dir);
+}
+void copy_perl_runtime(char `*` work_dir) {
 
-	copy_shell_runtime(work_dir);
-    execute_cmd("mkdir %s/usr", work_dir);
-    execute_cmd("mkdir %s/usr/lib64", work_dir);
-    execute_cmd("cp /usr/lib64/libperl* %s/usr/lib64/", work_dir);
-    execute_cmd("cp /usr/bin/perl* %s/", work_dir);
+        copy_shell_runtime(work_dir);
+        execute_cmd("mkdir %s/usr", work_dir);
+        execute_cmd("mkdir %s/usr/lib64", work_dir);
+        execute_cmd("cp /usr/lib64/libperl`*` %s/usr/lib64/", work_dir);
+        execute_cmd("cp /usr/bin/perl`*` %s/", work_dir);
+
 }
 void copy_freebasic_runtime(char * work_dir) {
 
@@ -1573,31 +1564,30 @@ void copy_freebasic_runtime(char * work_dir) {
 	execute_cmd("/bin/cp -a /lib32/* %s/lib/", work_dir);
 
 }
-void copy_mono_runtime(char * work_dir) {
+void copy_mono_runtime(char `*` work_dir) {
 
-	copy_shell_runtime(work_dir);
-    execute_cmd("mkdir %s/usr", work_dir);
-    execute_cmd("mkdir %s/proc", work_dir);
-    execute_cmd("mkdir -p %s/usr/lib64/mono/2.0", work_dir);
+        copy_shell_runtime(work_dir);
+        execute_cmd("mkdir %s/usr", work_dir);
+        execute_cmd("mkdir %s/proc", work_dir);
+        execute_cmd("mkdir -p %s/usr/lib64/mono/2.0", work_dir);
 
-    execute_cmd("cp -a /usr/lib64/mono %s/usr/lib64/", work_dir);
+        execute_cmd("cp -a /usr/lib64/mono %s/usr/lib64/", work_dir);
 
-    execute_cmd("cp /usr/lib64/libgthread`*` %s/usr/lib64/", work_dir);
+        execute_cmd("cp /usr/lib64/libgthread`*` %s/usr/lib64/", work_dir);
 
-    execute_cmd("mount -o bind /proc %s/proc", work_dir);
-    execute_cmd("cp /usr/bin/mono`*` %s/", work_dir);
+        execute_cmd("mount -o bind /proc %s/proc", work_dir);
+        execute_cmd("cp /usr/bin/mono`*` %s/", work_dir);
 
-    execute_cmd("cp /usr/lib64/libgthread`*` %s/usr/lib64/", work_dir);
-    execute_cmd("cp /lib/libglib`*` %s/lib/", work_dir);
-    execute_cmd("cp /lib/tls/i686/cmov/lib`*` %s/lib/tls/i686/cmov/", work_dir);
-    execute_cmd("cp /lib/libpcre`*` %s/lib/", work_dir);
-    execute_cmd("cp /lib/ld-linux`*` %s/lib/", work_dir);
-    execute_cmd("cp /lib64/ld-linux`*` %s/lib64/", work_dir);
-    execute_cmd("mkdir -p %s/home/judge", work_dir);
-    execute_cmd("chown judge %s/home/judge", work_dir);
-    execute_cmd("mkdir -p %s/etc", work_dir);
-    execute_cmd("grep judge /etc/passwd>%s/etc/passwd", work_dir);
-
+        execute_cmd("cp /usr/lib64/libgthread`*` %s/usr/lib64/", work_dir);
+        execute_cmd("cp /lib/libglib`*` %s/lib/", work_dir);
+        execute_cmd("cp /lib/tls/i686/cmov/lib`*` %s/lib/tls/i686/cmov/", work_dir);
+        execute_cmd("cp /lib/libpcre`*` %s/lib/", work_dir);
+         execute_cmd("cp /lib/ld-linux`*` %s/lib/", work_dir);
+        execute_cmd("cp /lib64/ld-linux`*` %s/lib64/", work_dir);
+        execute_cmd("mkdir -p %s/home/judge", work_dir);
+        execute_cmd("chown judge %s/home/judge", work_dir);
+        execute_cmd("mkdir -p %s/etc", work_dir);
+        execute_cmd("grep judge /etc/passwd>%s/etc/passwd", work_dir);
 }
 void copy_lua_runtime(char * work_dir) {
 
