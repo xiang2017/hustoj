@@ -2320,7 +2320,7 @@ int main(int argc, char** argv) {
 
 	//java is lucky
 	if (lang >= 3 && lang != 10 && lang != 13 && lang != 14) {  // Clang Clang++ not VM or Script
-		// the limit for java
+		// the limit for jav
 		time_lmt = time_lmt + java_time_bonus;
 		mem_lmt = mem_lmt + java_memory_bonus;
 		// copy java.policy
