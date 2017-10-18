@@ -1734,12 +1734,12 @@ void run_solution(int & lang, char * work_dir, int & time_lmt, int & usedtime,
 		execl("/bin/bash", "/bin/bash", "Main.sh", (char *) NULL);
 		break;
 	case 6: //Python
-		if(!py2){	
-			execl("/python2", "/python2", "Main.py", (char *) NULL);
+		//if(!py2){	
+		//	execl("/python2", "/python2", "Main.py", (char *) NULL);
+		//}else{
+			execl("/python3", "/python3", "Main.py", (char *) NULL);	
 			printf("Error %d:%s\n",errno, strerror(errno));
-		}else{
-			execl("/python3", "/python3", "Main.py", (char *) NULL);
-		}
+		//}
 		break;
 	case 7: //php
 		execl("/php", "/php", "Main.php", (char *) NULL);

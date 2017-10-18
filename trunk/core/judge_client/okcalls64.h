@@ -52,7 +52,7 @@ int LANG_BV[256] = { 0,1,2,3,4,5,8,9,10,12,13,14,16,21,33,39,59,63,72,79,97,102,
 		SYS_munmap, SYS_open, SYS_read, SYS_rt_sigaction, SYS_rt_sigprocmask,
 		SYS_stat, SYS_uname, SYS_write, 14, 0 };
 //python
-int LANG_YV[256] = { 0,32,72,131,1,2,3,4,5,6,8,9,10,11,12,13,14,16,21,59,78,79,89,97,102,104,107,108,158,202,218,231,257,273
+int LANG_YV[256] = { 0,32,72,131,1,2,3,4,5,6,8,9,10,11,12,13,14,16,21,59,78,79,89,97,102,104,107,108,158,202,218,231,257,273, 318
 			, 41, 42, 146, SYS_mremap, 158, 117, 60, 39, 102, 191,
 		SYS_access, SYS_arch_prctl, SYS_brk, SYS_close, SYS_execve,
 		SYS_exit_group, SYS_fcntl, SYS_fstat, SYS_futex, SYS_getcwd,
@@ -60,9 +60,9 @@ int LANG_YV[256] = { 0,32,72,131,1,2,3,4,5,6,8,9,10,11,12,13,14,16,21,59,78,79,8
 		SYS_getuid, SYS_ioctl, SYS_lseek, SYS_lstat, SYS_mmap, SYS_mprotect,
 		SYS_munmap, SYS_open, SYS_read, SYS_readlink, SYS_rt_sigaction,
 		SYS_rt_sigprocmask, SYS_set_robust_list, SYS_set_tid_address, SYS_stat,
-		SYS_write,318, 0 };
+		SYS_write, 0 };
 //php
-int LANG_PHV[256] = { 0,1,2,3,4,5,6,8,9,10,11,12,13,14,16,21,59,79,97,158,202,218,231,257,273,
+int LANG_PHV[256] = { 0,1,2,3,4,5,6,8,9,10,11,12,13,14,16,21,28,59,79,97,137,158,202,218,231,257,273,
 		257, 20, 146, 78, 158, 117, 60, 39, 102, 191, SYS_access,
 		SYS_brk, SYS_clone, SYS_close, SYS_execve, SYS_exit_group, SYS_fcntl,
 		SYS_fstat, SYS_futex, SYS_getcwd, SYS_getdents64, SYS_getrlimit,
