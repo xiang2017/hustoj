@@ -651,6 +651,62 @@ void update_solution(int solution_id, int result, int time, int memory, int sim,
 #endif
 	}
 }
+
+#ifdef _mysql_h
+void _insert_case_output(char * user_id, int solution_id, int case_id, int problem_id, int result){
+	// printf("user_id is: %s \n", user_id);
+	// printf("solution_id: %d\n", solution_id);
+	// printf("case_id: %d\n", case_id);
+	// printf("result: %d\n", result);
+	// printf("problem_id: %d\n", problem_id);
+
+	char sql[(1 << 16)], *end;
+	char output[(1 << 16)], *rend;
+	FILE *fp = fopen("user.out", "re");
+
+	snprintf(sql, (1 << 16) - 1, "DELETE FROM user_case_output WHERE user_id=\'%s\' and case_id=%d", user_id, case_id);
+	if(mysql_real_query(conn, sql, strlen(sql))){
+		printf("mysql Error:%s\n", mysql_error(conn));
+	}
+
+	rend = output;
+	while (fgets(rend, 1024, fp)) {
+		rend += strlen(rend);
+		if (rend - output > 40000)
+			break;
+	}
+	rend = 0;
+	end = sql;
+
+	char insert_sql[(1 << 16)];
+	sprintf(insert_sql,
+		 "INSERT INTO user_case_output(user_id, case_id, problem_id, solution_id, result, output) VALUES(\'%s\', %d, %d, %d, %d,",
+		user_id, case_id, problem_id, solution_id, result);
+
+	strcpy(end, insert_sql);
+	end += strlen(sql);
+	*end++ = '\'';
+	end += mysql_real_escape_string(conn, end, output, strlen(output));
+	*end++ = '\'';
+	*end++ = ')';
+	*end = 0;
+
+	if (mysql_real_query(conn, sql, end - sql))
+		printf("%s\n", mysql_error(conn));
+	fclose(fp);
+}
+#endif
+
+void insert_case_output(char * user_id, int solution_id, int case_id, int problem_id, int result){
+		if (http_judge){
+			// TODO add http request
+		} else{
+#ifdef _mysql_h
+			_insert_case_output(user_id, solution_id, case_id, problem_id, result);
+#endif
+		}
+}
+
 /* write compile error message back to database */
 #ifdef _mysql_h
 void _addceinfo_mysql(int solution_id) {
@@ -1009,7 +1065,7 @@ int compile(int lang,char * work_dir) {
             chroot(work_dir);
 		}
 
-		// ¾ÝËµ»áÓÐ°²È«Òþ»¼
+		// ï¿½ï¿½Ëµï¿½ï¿½ï¿½Ð°ï¿½È«ï¿½ï¿½ï¿½ï¿½
 		while(setgid(1536)!=0) sleep(1);
         while(setuid(1536)!=0) sleep(1);
         while(setresuid(1536, 1536, 1536)!=0) sleep(1);
@@ -1740,7 +1796,6 @@ void run_solution(int & lang, char * work_dir, int & time_lmt, int & usedtime,
 	case 6: //Python
 		if(!py2){	
 			execl("/python2", "/python2", "Main.py", (char *) NULL);
-			printf("Error %d:%s\n",errno, strerror(errno));
 		}else{
 			execl("/python3", "/python3", "Main.py", (char *) NULL);
 		}
@@ -2458,6 +2513,11 @@ int main(int argc, char** argv) {
 
 		if(http_judge&&(!data_list_has(dirp->d_name))) 
 			continue;
+
+		int l = strlen(dirp->d_name);
+		char str_case_id[16];		
+		memcpy(str_case_id, dirp->d_name, l - 3);		
+		int case_id = atoi(str_case_id);
 	
 		prepare_files(dirp->d_name, namelen, infile, p_id, work_dir, outfile,
 				userfile, runner_id);
@@ -2483,6 +2543,11 @@ int main(int argc, char** argv) {
 				max_case_time =
 						usedtime > max_case_time ? usedtime : max_case_time;
 				usedtime = 0;
+			}
+
+			// 0 æ˜¯ exampleï¼Œä¸è®¡å…¥ç»Ÿè®¡æ•°æ® TODO
+			if (case_id > 0){
+				insert_case_output(user_id, solution_id, case_id, p_id, ACflg);				
 			}
 			//clean_session(pidApp);
 		}
@@ -2535,7 +2600,7 @@ int main(int argc, char** argv) {
 	}
 	update_user(user_id);
 	update_problem(p_id);
-	//clean_workdir(work_dir);
+	clean_workdir(work_dir);
 
 	if (DEBUG)
 		write_log("result=%d", oi_mode ? finalACflg : ACflg);
