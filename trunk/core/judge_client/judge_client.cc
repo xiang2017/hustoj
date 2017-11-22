@@ -1659,54 +1659,79 @@ void copy_lua_runtime(char * work_dir) {
 }
 void copy_js_runtime(char * work_dir) {
 
-//	copy_shell_runtime(work_dir);
+	// copy_shell_runtime(work_dir);
+	// execute_cmd("/bin/mkdir -p %s/usr/lib /lib/i386-linux-gnu/", work_dir);
+    // execute_cmd("/bin/cp /lib/i386-linux-gnu/libz.so.*  %s/lib/i386-linux-gnu/", work_dir);
+    // execute_cmd("/bin/cp /usr/lib/i386-linux-gnu/libcares.so.*  %s/lib/i386-linux-gnu/", work_dir);
+    // execute_cmd("/bin/cp /usr/lib/libv8.so.*  %s/lib/i386-linux-gnu/", work_dir);
+    // execute_cmd("/bin/cp /lib/i386-linux-gnu/libssl.so.*  %s/lib/i386-linux-gnu/", work_dir);
+    // execute_cmd("/bin/cp /lib/i386-linux-gnu/libcrypto.so.*  %s/lib/i386-linux-gnu/", work_dir);
+    // execute_cmd("/bin/cp /lib/i386-linux-gnu/libdl.so.*  %s/lib/i386-linux-gnu/", work_dir);
+    // execute_cmd("/bin/cp /lib/i386-linux-gnu/librt.so.*  %s/lib/i386-linux-gnu/", work_dir);
+    // execute_cmd("/bin/cp /usr/lib/i386-linux-gnu/libstdc++.so.*  %s/lib/i386-linux-gnu/", work_dir);
+    // execute_cmd("/bin/cp /lib/i386-linux-gnu/libpthread.so.*  %s/lib/i386-linux-gnu/", work_dir);
+    // execute_cmd("/bin/cp /lib/i386-linux-gnu/libc.so.6  %s/lib/i386-linux-gnu/", work_dir);
+    // execute_cmd("/bin/cp /lib/i386-linux-gnu/libm.so.6  %s/lib/i386-linux-gnu/", work_dir);
+    // execute_cmd("/bin/cp /lib/i386-linux-gnu/libgcc_s.so.1  %s/lib/i386-linux-gnu/", work_dir);
+    // execute_cmd("/bin/cp /lib/ld-linux.so.*  %s/lib/i386-linux-gnu/", work_dir);
+
+	// execute_cmd("/bin/mkdir -p %s/usr/lib /lib/x86_64-linux-gnu/", work_dir);
+    // execute_cmd("/bin/cp /lib/x86_64-linux-gnu/libz.so.*  %s/lib/x86_64-linux-gnu/", work_dir);
+    // execute_cmd("/bin/cp /usr/lib/x86_64-linux-gnu/libcares.so.*  %s/lib/x86_64-linux-gnu/", work_dir);
+    // execute_cmd("/bin/cp /usr/lib/libv8.so.*  %s/lib/x86_64-linux-gnu/", work_dir);
+    // execute_cmd("/bin/cp /lib/x86_64-linux-gnu/libssl.so.*  %s/lib/x86_64-linux-gnu/", work_dir);
+    // execute_cmd("/bin/cp /lib/x86_64-linux-gnu/libcrypto.so.*  %s/lib/x86_64-linux-gnu/", work_dir);
+    // execute_cmd("/bin/cp /lib/x86_64-linux-gnu/libdl.so.*  %s/lib/x86_64-linux-gnu/", work_dir);
+    // execute_cmd("/bin/cp /lib/x86_64-linux-gnu/librt.so.*  %s/lib/x86_64-linux-gnu/", work_dir);
+    // execute_cmd("/bin/cp /usr/lib/x86_64-linux-gnu/libstdc++.so.*  %s/lib/x86_64-linux-gnu/", work_dir);
+    // execute_cmd("/bin/cp /lib/x86_64-linux-gnu/libpthread.so.*  %s/lib/x86_64-linux-gnu/", work_dir);
+    // execute_cmd("/bin/cp /lib/x86_64-linux-gnu/libc.so.6  %s/lib/x86_64-linux-gnu/", work_dir);
+    // execute_cmd("/bin/cp /lib/x86_64-linux-gnu/libm.so.6  %s/lib/x86_64-linux-gnu/", work_dir);
+    // execute_cmd("/bin/cp /lib/x86_64-linux-gnu/libgcc_s.so.1  %s/lib/x86_64-linux-gnu/", work_dir);
+    // execute_cmd("/bin/cp /lib64/ld-linux-x86-64.so.2  %s/lib/x86_64-linux-gnu/", work_dir);
+
+
 	execute_cmd("/bin/mkdir -p %s/usr/lib /lib/i386-linux-gnu/", work_dir);
-    execute_cmd("/bin/cp /lib/i386-linux-gnu/libz.so.*  %s/lib/i386-linux-gnu/", work_dir);
-    execute_cmd("/bin/cp /usr/lib/i386-linux-gnu/libcares.so.*  %s/lib/i386-linux-gnu/", work_dir);
-    execute_cmd("/bin/cp /usr/lib/libv8.so.*  %s/lib/i386-linux-gnu/", work_dir);
-    execute_cmd("/bin/cp /lib/i386-linux-gnu/libssl.so.*  %s/lib/i386-linux-gnu/", work_dir);
-    execute_cmd("/bin/cp /lib/i386-linux-gnu/libcrypto.so.*  %s/lib/i386-linux-gnu/", work_dir);
-    execute_cmd("/bin/cp /lib/i386-linux-gnu/libdl.so.*  %s/lib/i386-linux-gnu/", work_dir);
-    execute_cmd("/bin/cp /lib/i386-linux-gnu/librt.so.*  %s/lib/i386-linux-gnu/", work_dir);
-    execute_cmd("/bin/cp /usr/lib/i386-linux-gnu/libstdc++.so.*  %s/lib/i386-linux-gnu/", work_dir);
-    execute_cmd("/bin/cp /lib/i386-linux-gnu/libpthread.so.*  %s/lib/i386-linux-gnu/", work_dir);
-    execute_cmd("/bin/cp /lib/i386-linux-gnu/libc.so.6  %s/lib/i386-linux-gnu/", work_dir);
-    execute_cmd("/bin/cp /lib/i386-linux-gnu/libm.so.6  %s/lib/i386-linux-gnu/", work_dir);
-    execute_cmd("/bin/cp /lib/i386-linux-gnu/libgcc_s.so.1  %s/lib/i386-linux-gnu/", work_dir);
-    execute_cmd("/bin/cp /lib/ld-linux.so.*  %s/lib/i386-linux-gnu/", work_dir);
+    execute_cmd("/bin/cp /lib/libz.so.*  %s/lib/", work_dir);
+    execute_cmd("/bin/cp /usr/lib/libcares.so.*  %s/lib/", work_dir);
+    execute_cmd("/bin/cp /usr/lib/libv8.so.*  %s/lib/", work_dir);
+    execute_cmd("/bin/cp /lib/libssl.so.*  %s/lib/", work_dir);
+    execute_cmd("/bin/cp /lib/libcryp*  %s/lib/", work_dir);
+    execute_cmd("/bin/cp /lib/libdl*  %s/lib/", work_dir);
+    execute_cmd("/bin/cp /lib/librt*  %s/lib/", work_dir);
+    execute_cmd("/bin/cp /usr/lib/libstdc++.so.*  %s/lib/", work_dir);
+    execute_cmd("/bin/cp /lib/libpthread*  %s/lib/", work_dir);
+    execute_cmd("/bin/cp /lib/libc.so.6  %s/lib/", work_dir);
+    execute_cmd("/bin/cp /lib/libm.so.6  %s/lib/", work_dir);
+    execute_cmd("/bin/cp /lib/libgcc_s*  %s/lib/", work_dir);
+    execute_cmd("/bin/cp /lib/ld-linux.so.*  %s/lib/", work_dir);
 
-	execute_cmd("/bin/mkdir -p %s/usr/lib /lib/x86_64-linux-gnu/", work_dir);
-    execute_cmd("/bin/cp /lib/x86_64-linux-gnu/libz.so.*  %s/lib/x86_64-linux-gnu/", work_dir);
-    execute_cmd("/bin/cp /usr/lib/x86_64-linux-gnu/libcares.so.*  %s/lib/x86_64-linux-gnu/", work_dir);
-    execute_cmd("/bin/cp /usr/lib/libv8.so.*  %s/lib/x86_64-linux-gnu/", work_dir);
-    execute_cmd("/bin/cp /lib/x86_64-linux-gnu/libssl.so.*  %s/lib/x86_64-linux-gnu/", work_dir);
-    execute_cmd("/bin/cp /lib/x86_64-linux-gnu/libcrypto.so.*  %s/lib/x86_64-linux-gnu/", work_dir);
-    execute_cmd("/bin/cp /lib/x86_64-linux-gnu/libdl.so.*  %s/lib/x86_64-linux-gnu/", work_dir);
-    execute_cmd("/bin/cp /lib/x86_64-linux-gnu/librt.so.*  %s/lib/x86_64-linux-gnu/", work_dir);
-    execute_cmd("/bin/cp /usr/lib/x86_64-linux-gnu/libstdc++.so.*  %s/lib/x86_64-linux-gnu/", work_dir);
-    execute_cmd("/bin/cp /lib/x86_64-linux-gnu/libpthread.so.*  %s/lib/x86_64-linux-gnu/", work_dir);
-    execute_cmd("/bin/cp /lib/x86_64-linux-gnu/libc.so.6  %s/lib/x86_64-linux-gnu/", work_dir);
-    execute_cmd("/bin/cp /lib/x86_64-linux-gnu/libm.so.6  %s/lib/x86_64-linux-gnu/", work_dir);
-    execute_cmd("/bin/cp /lib/x86_64-linux-gnu/libgcc_s.so.1  %s/lib/x86_64-linux-gnu/", work_dir);
-    execute_cmd("/bin/cp /lib64/ld-linux-x86-64.so.2  %s/lib/x86_64-linux-gnu/", work_dir);
+    execute_cmd("/bin/cp -R /lib/node_modules*  %s/lib/", work_dir);
 
-	execute_cmd("/bin/cp /usr/bin/nodejs %s/", work_dir);
+	execute_cmd("/bin/mkdir -p %s/usr/include/node", work_dir);
+	
+	execute_cmd("/bin/cp -R /usr/include/node/* %s/usr/include/node/", work_dir);
+
+	execute_cmd("/bin/cp /usr/bin/node %s/", work_dir);
 
 }
 void run_solution(int & lang, char * work_dir, int & time_lmt, int & usedtime,
 		int & mem_lmt) {
 	nice(19);
 	int py2=execute_cmd("/bin/grep 'python2' Main.py");
+
 	// now the user is "judger"
 	chdir(work_dir);
 	// open the files
 	freopen("data.in", "r", stdin);
 	freopen("user.out", "w", stdout);
 	freopen("error.out", "a+", stderr);
+
 	// trace me
 	if(use_ptrace) ptrace(PTRACE_TRACEME, 0, NULL, NULL);
 	// run me
-	if (lang != 3)
+
+	if (lang != 3 && lang != 16)
 		chroot(work_dir);
 
 	while (setgid(1536) != 0)
@@ -1766,7 +1791,6 @@ void run_solution(int & lang, char * work_dir, int & time_lmt, int & usedtime,
 	LIM.rlim_max = STD_MB * mem_lmt * 2;
 	if (lang < 3)
 		setrlimit(RLIMIT_AS, &LIM);
-
 	switch (lang) {
 	case 0:
 	case 1:
@@ -1816,7 +1840,11 @@ void run_solution(int & lang, char * work_dir, int & time_lmt, int & usedtime,
 		execl("/lua", "/lua", "Main", (char *) NULL);
 		break;
 	case 16: //Node.js
-		execl("/nodejs", "/nodejs", "Main.js", (char *) NULL);
+		// execl("./", "node", "Main.js", (char *) NULL);
+		// execl("/node", "/node", "Main.js", (char *) NULL);
+		execl("/usr/bin/node", "/usr/bin/node", "Main.js", (char *) NULL);
+
+		// execute_cmd("node Main.js");
 		break;
 
 	}
@@ -2601,6 +2629,7 @@ int main(int argc, char** argv) {
 	update_user(user_id);
 	update_problem(p_id);
 	clean_workdir(work_dir);
+	// clean_workdir(work_dir);
 
 	if (DEBUG)
 		write_log("result=%d", oi_mode ? finalACflg : ACflg);
